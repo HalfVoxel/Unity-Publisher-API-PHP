@@ -5,7 +5,7 @@
     $store = new AssetStore\Client();
 
     // Login with your credentials
-	$arr = file("../.credentials/assetstore");
+	$arr = file(".credentials/assetstore");
     $store->Login(trim($arr[0]), trim($arr[1]));
 
     $store->DumpData();
