@@ -55,6 +55,34 @@ class Client {
         return $this->isLoggedIn;
     }
 
+    public function DumpData() {
+        $this->AssertIsLoggedIn();
+
+        $res = $this->GetSimpleData(Array('url' => self::PUBLISHER_OVERVIEW_JSON_URL));
+        file_put_contents ("publisher_overview.json", $res['data']);
+
+        $res = $this->GetSimpleData(Array('url' => self::USER_OVERVIEW_JSON_URL));
+        file_put_contents ("user_overview.json", $res['data']);
+
+        $url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::SALES_PERIODS_JSON_URL);
+        $res = $this->GetSimpleData(Array('url' => $url));
+        file_put_contents ("sales_periods.json", $res['data']);
+
+        //$url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::SALES_PERIODS_JSON_URL);
+        //$res = $this->GetSimpleData(Array('url' => self::SALES_JSON_URL));
+        //file_put_contents ("overview.json", $res['data']);
+
+        $url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::REVENUE_JSON_URL);
+        $res = $this->GetSimpleData(Array('url' => $url));
+        file_put_contents ("revenue.json", $res['data']);
+
+        $url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::SALES_JSON_URL);
+        $url = str_replace('{year}', "2013", $url);
+        $url = str_replace('{month}', "12", $url);
+        $res = $this->GetSimpleData(Array('url' => $url));
+        file_put_contents ("revenue_2014_12.json", $res['data']);
+    }
+
     public function GetUserInfo() {
         $this->AssertIsLoggedIn();
 

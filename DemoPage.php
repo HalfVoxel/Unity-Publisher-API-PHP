@@ -22,7 +22,8 @@
     $store = new AssetStore\Client();
 
     // Login with your credentials
-    $store->Login('your@email.com', 'password');
+    $arr = file("../.credentials/assetstore");
+    $store->Login(trim($arr[0]), trim($arr[1]));
 
     // Or, if you don't want to keep your credentials in the code, use the token (returned by Login() method or retrieved from your browser cookies)
     // $store->LoginWithToken('put your token here');
