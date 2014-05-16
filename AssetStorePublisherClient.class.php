@@ -58,6 +58,8 @@ class Client {
     public function DumpData() {
         $this->AssertIsLoggedIn();
 
+        date_default_timezone_set ("Etc/GMT-7");
+
         $res = $this->GetSimpleData(Array('url' => self::PUBLISHER_OVERVIEW_JSON_URL));
         file_put_contents ("publisher_overview.json", $res['data']);
 
@@ -76,11 +78,15 @@ class Client {
         $res = $this->GetSimpleData(Array('url' => $url));
         file_put_contents ("revenue.json", $res['data']);
 
-        /*$url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::SALES_JSON_URL);
-        $url = str_replace('{year}', "2013", $url);
-        $url = str_replace('{month}', "12", $url);
+        $url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::REVENUE_JSON_URL);
         $res = $this->GetSimpleData(Array('url' => $url));
-        file_put_contents ("revenue_2014_12.json", $res['data']);*/
+        file_put_contents ("revenue.json", $res['data']);
+
+        $url = str_replace('{publisher_id}', $this->GetPublisherInfo()->GetId(), self::SALES_JSON_URL);
+        $url = str_replace('{year}', date("Y"), $url);
+        $url = str_replace('{month}', date("m"), $url);
+        $res = $this->GetSimpleData(Array('url' => $url));
+        file_put_contents ("revenue_current.json", $res['data']);
     }
 
     public function GetUserInfo() {
